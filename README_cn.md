@@ -7,14 +7,11 @@
 [PARL](https://github.com/PaddlePaddle/PARL) 是一款基于百度 PaddlePaddle 打造的深度强化学习框架。
 
 ## 依赖：##
- '''
- pip install gym
- pip install paddlepaddl
- pip install parl
- pip install atari-py
- pip install rlschool 
 
- '''
+
+```bash
+pip install -r requirements.txt
+```
 
 ## 一、[《强化学习7日打卡营-世界冠军带你从零实践》](https://aistudio.baidu.com/aistudio/education/group/info/1335) 课程作业： ##
 - 作业1：[SARSA迷宫游戏](https://github.com/ioaniu/RLPaddlePARL/tree/master/homework/hw1_SARSA) （test reward: 1.0）
@@ -24,5 +21,5 @@
 - 作业5：[DDPG四轴飞行器悬浮](https://github.com/ioaniu/RLPaddlePARL/tree/master/homework/hw5_DDPG) （test reward: 8980）
 
 ## 二、复现实践： ##
-- 环境1：Paddle： https://github.com/shivaverma/Orbit/Paddle 
+- 环境1：[Paddle](https://github.com/ioaniu/RLPaddlePARL/tree/master/practice/Paddle)： https://github.com/shivaverma/Orbit/Paddle 
 - 环境2：Jump： https://github.com/shivaverma/Orbit/ump 
