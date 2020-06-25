@@ -7,7 +7,7 @@
 
 [PARL](https://github.com/PaddlePaddle/PARL) is a flexible and high-efficient reinforcement learning framework.
 
-## Requirements##
+## Requirements ##
 
 
 ```bash
@@ -15,12 +15,12 @@ pip install -r requirements.txt
 ```
 
 ## 1. [强化学习7日打卡营-世界冠军带你从零实践](https://aistudio.baidu.com/aistudio/education/group/info/1335) Homework: ##
-- hw1: [SARSA FrozenLake](https://github.com/ioaniu/RLPaddlePARL/tree/master/homework/hw1_SARSA) （test reward: 1.0）
-- hw2: [Q Learning for FrozenLake](https://github.com/ioaniu/RLPaddlePARL/tree/master/homework/hw2_QLearning) （test reward: 1.0）
-- hw3: [DQN for MountainCar](https://github.com/ioaniu/RLPaddlePARL/tree/master/homework/hw3_DQN) （test reward: -100）
-- hw4: [PG for Pong](https://github.com/ioaniu/RLPaddlePARL/tree/master/homework/hw4_PG) （test reward: 10）
-- hw5: [DDPG for Quadrotor Hovering Control](https://github.com/ioaniu/RLPaddlePARL/tree/master/homework/hw5_DDPG) （test reward: 8980）
+- hw1: [SARSA FrozenLake](https://github.com/ioaniu/RLPaddlePARL/tree/master/homework/hw1_SARSA) （best test reward: 1.0）
+- hw2: [Q Learning for FrozenLake](https://github.com/ioaniu/RLPaddlePARL/tree/master/homework/hw2_QLearning) （best test reward: 1.0）
+- hw3: [DQN for MountainCar](https://github.com/ioaniu/RLPaddlePARL/tree/master/homework/hw3_DQN) （best test reward: -100）
+- hw4: [PG for Pong](https://github.com/ioaniu/RLPaddlePARL/tree/master/homework/hw4_PG) （best test reward: 10）
+- hw5: [DDPG for Quadrotor Hovering Control](https://github.com/ioaniu/RLPaddlePARL/tree/master/homework/hw5_DDPG) （best test reward: 8980）
 
 ## 2. Practice: ##
-- Env1:[Paddle](https://github.com/ioaniu/RLPaddlePARL/tree/master/practice/Paddle)： https://github.com/shivaverma/Orbit/Paddle 
-- Env2:[Jump](https://github.com/ioaniu/RLPaddlePARL/tree/master/practice/Jump)： https://github.com/shivaverma/Orbit/Jump 
+- Env1: [Paddle](https://github.com/ioaniu/RLPaddlePARL/tree/master/practice/Paddle) (best test reward: )  https://github.com/shivaverma/Orbit/tree/master/Paddle 
+- Env2: [Jump](https://github.com/ioaniu/RLPaddlePARL/tree/master/practice/Jump) (best test reward: )  https://github.com/shivaverma/Orbit/tree/master/Jump

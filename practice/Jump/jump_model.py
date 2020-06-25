@@ -1,13 +1,14 @@
 #######################################################################################################
 # 2020-06-25
-# Author: ioaniu/Jeff Young
+# ioaniu/Jeff Young
 # Modified from https://https://github.com/PaddlePaddle/PARL/blob/develop/examples/DQN/cartpole_model.py
 #######################################################################################################
 
+import paddle.fluid as fluid
 import parl
 from parl import layers
 
-class PaddleModel(parl.Model):
+class JumpModel(parl.Model):
     def __init__(self, act_dim):
         hid1_size = 64
         hid2_size = 64

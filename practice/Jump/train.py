@@ -1,6 +1,6 @@
 #######################################################################################################
 # 2020-06-25
-# Author: ioaniu/Jeff Young
+# ioaniu/Jeff Young
 # Modified from 
 #    https://https://https://github.com/shivaverma/Orbit/tree/master/Paddle/agent.py
 #    https://https://github.com/PaddlePaddle/PARL/blob/develop/examples/DQN/replay_memory.py
@@ -10,10 +10,10 @@ import numpy as np
 import parl
 from parl.utils import logger
 
-from paddleball import Paddle
+from jump import JumpGame
 
-from paddle_model import PaddleModel
-from paddle_agent import PaddleAgent
+from jump_model import JumpModel
+from jump_agent import JumpAgent
 
 from replay_memory import ReplayMemory
 import matplotlib.pyplot as plt
@@ -23,7 +23,7 @@ import matplotlib.pyplot as plt
 LEARN_FREQ = 5  # update parameters every 5 steps
 MEMORY_SIZE = 100000  # replay memory size
 MEMORY_WARMUP_SIZE = 200  # store some experiences in the replay memory in advance
-BATCH_SIZE = 128
+BATCH_SIZE = 64
 LEARNING_RATE = 0.001
 GAMMA = 0.99  # discount factor of reward
 
@@ -38,6 +38,7 @@ def run_episode(agent, env, rpm,render=False):
         action = agent.sample(obs)
 
         reward, next_obs, isOver = env.step(action)
+        # next_obs, reward, isOver = env.step(action)
         rpm.append((obs, action, reward, next_obs, isOver))
 
         # train model
@@ -52,10 +53,11 @@ def run_episode(agent, env, rpm,render=False):
         if render:
             env.render()
         if isOver:
-            # print("episode: {}, score: {}".format(step, total_reward))
-            break            
-        # if step > 1000:
-        	# break
+            print("episode: {}, score: {}".format(step, total_reward))
+            break
+            
+        if step > 1000:
+        	break
     return total_reward
 
 
@@ -77,17 +79,17 @@ def evaluate(agent, env, render=False):
 
 
 def main():
-
-    env = Paddle()
+	
+    env = JumpGame()
     action_dim = 2
-    obs_shape = 5
+    obs_shape = len(env.reset())
 
     rpm = ReplayMemory(MEMORY_SIZE)
 
-    model = PaddleModel(act_dim=action_dim)
+    model = JumpModel(act_dim=action_dim)
     algorithm = parl.algorithms.DQN(
         model, act_dim=action_dim, gamma=GAMMA, lr=LEARNING_RATE)
-    agent = PaddleAgent(
+    agent = JumpAgent(
         algorithm,
         obs_dim=obs_shape,
         act_dim=action_dim,
@@ -96,7 +98,7 @@ def main():
     )  # probability of exploring is decreasing during training
     
     # 加载模型
-#    save_path = 'paddle_model.ckpt'
+#    save_path = 'jump_model.ckpt'
 #    agent.restore(save_path)
 
     while len(rpm) < MEMORY_WARMUP_SIZE:  # warm up replay memory
@@ -112,7 +114,6 @@ def main():
         for i in range(0, 50):
             total_reward = run_episode(agent, env, rpm)
             episode += 1
-            # print train reward
             train_total_reward.append(total_reward)  
             plt.plot(train_total_reward)
             plt.draw()
@@ -124,7 +125,7 @@ def main():
         logger.info('episode:{}    test_reward:{}'.format(
             episode, eval_reward))
     # 训练结束，保存模型
-    save_path = 'paddle_model.ckpt'
+    save_path = 'jump_model.ckpt'
     agent.save(save_path)
 
 
