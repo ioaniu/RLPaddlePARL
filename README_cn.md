@@ -17,11 +17,11 @@
  '''
 
 ## 一、[《强化学习7日打卡营-世界冠军带你从零实践》](https://aistudio.baidu.com/aistudio/education/group/info/1335) 课程作业： ##
-- 作业1：SARSA迷宫游戏 （test reward: 1.0）
-- 作业2：Q Learning迷宫游戏 （test reward: 1.0）
-- 作业3：DQN解决MountainCar （test reward: -100）
-- 作业4：PG解决Pong （test reward: 10）
-- 作业5：DDPG四轴飞行器悬浮 （test reward: 8980）
+- 作业1：[SARSA迷宫游戏](https://github.com/ioaniu/RLPaddlePARL/tree/master/homework/hw1_SARSA) （test reward: 1.0）
+- 作业2：[Q Learning迷宫游戏](https://github.com/ioaniu/RLPaddlePARL/tree/master/homework/hw2_QLearning) （test reward: 1.0）
+- 作业3：[DQN解决MountainCar](https://github.com/ioaniu/RLPaddlePARL/tree/master/homework/hw3_DQN) （test reward: -100）
+- 作业4：[PG解决Pong](https://github.com/ioaniu/RLPaddlePARL/tree/master/homework/hw4_PG) （test reward: 10）
+- 作业5：[DDPG四轴飞行器悬浮](https://github.com/ioaniu/RLPaddlePARL/tree/master/homework/hw5_DDPG) （test reward: 8980）
 
 ## 二、复现实践： ##
 - 环境1：Paddle： https://github.com/shivaverma/Orbit/Paddle 
