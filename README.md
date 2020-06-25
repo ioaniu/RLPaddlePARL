@@ -24,3 +24,4 @@ pip install -r requirements.txt
 ## 2. Practice: ##
 - Env1: [Paddle](https://github.com/ioaniu/RLPaddlePARL/tree/master/practice/Paddle) (best test reward: )  https://github.com/shivaverma/Orbit/tree/master/Paddle 
 - Env2: [Jump](https://github.com/ioaniu/RLPaddlePARL/tree/master/practice/Jump) (best test reward: )  https://github.com/shivaverma/Orbit/tree/master/Jump
+- Env3: [Quadrotor Velocity Control](https://github.com/ioaniu/RLPaddlePARL/tree/master/practice/Quadrotor) (best test reward: )  

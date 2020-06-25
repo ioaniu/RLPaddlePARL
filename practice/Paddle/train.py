@@ -23,7 +23,7 @@ import matplotlib.pyplot as plt
 LEARN_FREQ = 5  # update parameters every 5 steps
 MEMORY_SIZE = 100000  # replay memory size
 MEMORY_WARMUP_SIZE = 200  # store some experiences in the replay memory in advance
-BATCH_SIZE = 128
+BATCH_SIZE = 64
 LEARNING_RATE = 0.001
 GAMMA = 0.99  # discount factor of reward
 
@@ -114,10 +114,10 @@ def main():
             episode += 1
             # print train reward
             train_total_reward.append(total_reward)  
-            plt.plot(train_total_reward)
-            plt.draw()
-            plt.pause(0.001)
-            plt.show()
+#            plt.plot(train_total_reward)
+#            plt.draw()
+#            plt.pause(0.001)
+#            plt.show()
             
 
         eval_reward = evaluate(agent, env)

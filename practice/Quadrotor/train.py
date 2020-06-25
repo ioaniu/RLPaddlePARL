@@ -32,8 +32,8 @@ TRAIN_TOTAL_STEPS = 1e6   # 总训练步数
 TEST_EVERY_STEPS = 1e4    # 每个N步评估一下算法效果，每次评估5个episode求平均reward
 
 
-NOISE = 0.05         # 动作噪声方差
-OFFSET_FACTOR = 0.2  # 补偿系数：输出5个action，其中第一个有主值，后四个有补偿值
+NOISE = 0.02         # 动作噪声方差
+OFFSET_FACTOR = 0.1  # 补偿系数：输出5个action，其中第一个有主值，后四个有补偿值
 
 
 def run_episode(env, agent, rpm, render=False):
@@ -50,18 +50,18 @@ def run_episode(env, agent, rpm, render=False):
 
         # action_tmp = action[0] +action[-(len(action)-1):,] * OFFSET_FACTOR;
         # action = np.append(action[0],action_tmp)
-        动作映射到对应的 实际动作取值范围 内, action_mapping是从parl.utils那里import进来的函数
-        action = action_mapping(action, env.action_space.low[0],
-                                env.action_space.high[0])        
-        next_obs, reward, done, info = env.step(action)
-
-        # main_action = action[0]
-        # sub_action = action[1:]
-        # sub_action = main_action + sub_action * OFFSET_FACTOR;
-        # sub_action = np.clip(sub_action, -1.0, 1.0)
-        # sub_action = action_mapping(sub_action, env.action_space.low[0],
+        # 动作映射到对应的 实际动作取值范围 内, action_mapping是从parl.utils那里import进来的函数
+        # action = action_mapping(action, env.action_space.low[0],
         #                         env.action_space.high[0])        
-        # next_obs, reward, done, info = env.step(sub_action)
+        # next_obs, reward, done, info = env.step(action)
+
+        main_action = action[0]
+        sub_action = action[1:]
+        sub_action = main_action + sub_action * OFFSET_FACTOR;
+        sub_action = np.clip(sub_action, -1.0, 1.0)
+        sub_action = action_mapping(sub_action, env.action_space.low[0],
+                                env.action_space.high[0])        
+        next_obs, reward, done, info = env.step(sub_action)
 
         rpm.append(obs, action, REWARD_SCALE * reward, next_obs, done)
 
@@ -96,18 +96,18 @@ def evaluate(env, agent, render=False):
             # action = np.append(action[0],action_tmp)
             
             #输出限制在 [-1.0, 1.0] 范围内
-            action = np.clip(action, -1.0, 1.0)
-            action = action_mapping(action, env.action_space.low[0], 
-                                    env.action_space.high[0])
-            next_obs, reward, done, info = env.step(action)
+            # action = np.clip(action, -1.0, 1.0)
+            # action = action_mapping(action, env.action_space.low[0], 
+            #                         env.action_space.high[0])
+            # next_obs, reward, done, info = env.step(action)
 
-            # main_action = action[0]
-            # sub_action = action[1:]
-            # sub_action = main_action + sub_action * OFFSET_FACTOR;
-            # sub_action = np.clip(sub_action, -1.0, 1.0)
-            # sub_action = action_mapping(sub_action, env.action_space.low[0],
-            #                         env.action_space.high[0])        
-            # next_obs, reward, done, info = env.step(sub_action)
+            main_action = action[0]
+            sub_action = action[1:]
+            sub_action = main_action + sub_action * OFFSET_FACTOR;
+            sub_action = np.clip(sub_action, -1.0, 1.0)
+            sub_action = action_mapping(sub_action, env.action_space.low[0],
+                                    env.action_space.high[0])        
+            next_obs, reward, done, info = env.step(sub_action)
 
             obs = next_obs
             total_reward += reward
@@ -130,7 +130,7 @@ obs_dim = env.observation_space.shape[0]
 act_dim = env.action_space.shape[0]
 
 # # 输出action增加1维作为main action, 其它为补偿值
-# act_dim = act_dim + 1
+act_dim = act_dim + 1
 
 # 根据parl框架构建agent
 model = QuadrotorModel(act_dim)
@@ -149,13 +149,13 @@ test_flag = 0
 total_steps = 0
 
 # # 加载模型
-# ckpt = 'model_dir/steps_best.ckpt' 
-# agent.restore(ckpt)
+ckpt = 'model_dir/steps_best.ckpt' 
+agent.restore(ckpt)
 
 best_reward, steps = run_episode(env, agent, rpm, render=False)
 
 while total_steps < TRAIN_TOTAL_STEPS:
-    train_reward, steps = run_episode(env, agent, rpm, render=False)
+    train_reward, steps = run_episode(env, agent, rpm, render=True)
     total_steps += steps
     # logger.info('Steps: {} Reward: {}'.format(total_steps, train_reward)) # 打印训练reward
 
@@ -163,7 +163,7 @@ while total_steps < TRAIN_TOTAL_STEPS:
         while total_steps // TEST_EVERY_STEPS >= test_flag:
             test_flag += 1
  
-        evaluate_reward = evaluate(env, agent, render=False)
+        evaluate_reward = evaluate(env, agent, render=True)
         logger.info('Steps {}, Test reward: {}'.format(
             total_steps, evaluate_reward)) # 打印评估的reward
 

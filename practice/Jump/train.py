@@ -24,7 +24,7 @@ LEARN_FREQ = 5  # update parameters every 5 steps
 MEMORY_SIZE = 100000  # replay memory size
 MEMORY_WARMUP_SIZE = 200  # store some experiences in the replay memory in advance
 BATCH_SIZE = 64
-LEARNING_RATE = 0.001
+LEARNING_RATE = 0.01
 GAMMA = 0.99  # discount factor of reward
 
 
@@ -36,7 +36,8 @@ def run_episode(agent, env, rpm,render=False):
     while True:
         step += 1
         action = agent.sample(obs)
-
+        
+#        print(action)
         reward, next_obs, isOver = env.step(action)
         # next_obs, reward, isOver = env.step(action)
         rpm.append((obs, action, reward, next_obs, isOver))
@@ -98,7 +99,7 @@ def main():
     )  # probability of exploring is decreasing during training
     
     # 加载模型
-#    save_path = 'jump_model.ckpt'
+#    save_path = 'jump_best_model.ckpt'
 #    agent.restore(save_path)
 
     while len(rpm) < MEMORY_WARMUP_SIZE:  # warm up replay memory
@@ -108,22 +109,30 @@ def main():
 
     # start train
     episode = 0
+    
     train_total_reward = []
+    best_eval_reward = 0
     while episode < max_episode:
         # train part
         for i in range(0, 50):
             total_reward = run_episode(agent, env, rpm)
             episode += 1
             train_total_reward.append(total_reward)  
-            plt.plot(train_total_reward)
-            plt.draw()
-            plt.pause(0.001)
-            plt.show()
+            print(total_reward)
+            # plt.plot(train_total_reward)
+            # plt.draw()
+            # plt.pause(0.001)
+            # plt.show()
             
 
         eval_reward = evaluate(agent, env)
         logger.info('episode:{}    test_reward:{}'.format(
             episode, eval_reward))
+        if best_eval_reward < eval_reward:
+            best_eval_reward = eval_reward
+            save_path = 'jump_best_model.ckpt'
+            agent.save(save_path)
+            
     # 训练结束，保存模型
     save_path = 'jump_model.ckpt'
     agent.save(save_path)

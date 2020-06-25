@@ -21,5 +21,6 @@ pip install -r requirements.txt
 - 作业5：[DDPG四轴飞行器悬浮](https://github.com/ioaniu/RLPaddlePARL/tree/master/homework/hw5_DDPG) （best test reward: 8980）
 
 ## 二、复现实践： ##
-- 环境1：[Paddle](https://github.com/ioaniu/RLPaddlePARL/tree/master/practice/Paddle) (best test reward: )  https://github.com/shivaverma/Orbit/tree/master/Paddle 
+- 环境1：[Paddle](https://github.com/ioaniu/RLPaddlePARL/tree/master/practice/Paddle) (best test reward: 4.7)  https://github.com/shivaverma/Orbit/tree/master/Paddle 
 - 环境2：[Jump](https://github.com/ioaniu/RLPaddlePARL/tree/master/practice/Jump) (best test reward: )  https://github.com/shivaverma/Orbit/tree/master/Jump
+- 环境3：[四轴飞行器速度 ](https://github.com/ioaniu/RLPaddlePARL/tree/master/practice/Quadrotor) (best test reward: )  
