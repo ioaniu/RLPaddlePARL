@@ -20,12 +20,12 @@ import matplotlib.pyplot as plt
 
 
 
-LEARN_FREQ = 5  # update parameters every 5 steps
+LEARN_FREQ = 10  # update parameters every 5 steps
 MEMORY_SIZE = 100000  # replay memory size
-MEMORY_WARMUP_SIZE = 200  # store some experiences in the replay memory in advance
-BATCH_SIZE = 64
-LEARNING_RATE = 0.01
-GAMMA = 0.99  # discount factor of reward
+MEMORY_WARMUP_SIZE = 1000  # store some experiences in the replay memory in advance
+BATCH_SIZE = 128
+LEARNING_RATE = 0.001
+GAMMA = 0.9  # discount factor of reward
 
 
 
@@ -82,7 +82,7 @@ def evaluate(agent, env, render=False):
 def main():
 	
     env = JumpGame()
-    action_dim = 2
+    action_dim = 5
     obs_shape = len(env.reset())
 
     rpm = ReplayMemory(MEMORY_SIZE)
@@ -94,7 +94,7 @@ def main():
         algorithm,
         obs_dim=obs_shape,
         act_dim=action_dim,
-        e_greed=0.1,  # explore
+        e_greed=0.3,  # explore
         e_greed_decrement=1e-6
     )  # probability of exploring is decreasing during training
     

@@ -47,7 +47,12 @@ class PaddleAgent(parl.Agent):
             next_obs = layers.data(
                 name='next_obs', shape=[self.obs_dim], dtype='float32')
             terminal = layers.data(name='terminal', shape=[], dtype='bool')
-            self.cost = self.alg.learn(obs, action, reward, next_obs, terminal)
+#            self.cost = self.alg.learn(obs, action, reward, next_obs, terminal)
+
+            lr = layers.data(
+                name='lr', shape=[1], dtype='float32', append_batch_size=False)
+            self.cost = self.alg.learn(obs, action, reward, next_obs, terminal,
+                                       lr)
 
     def sample(self, obs):
         sample = np.random.rand()

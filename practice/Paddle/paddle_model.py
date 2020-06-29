@@ -9,8 +9,8 @@ from parl import layers
 
 class PaddleModel(parl.Model):
     def __init__(self, act_dim):
-        hid1_size = 64
-        hid2_size = 64
+        hid1_size = 100
+        hid2_size = 100
         self.fc1 = layers.fc(size=hid1_size, act='relu')
         self.fc2 = layers.fc(size=hid2_size, act='relu')
         self.fc3 = layers.fc(size=act_dim, act=None)

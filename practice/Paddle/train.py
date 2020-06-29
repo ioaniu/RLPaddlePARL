@@ -20,19 +20,20 @@ import matplotlib.pyplot as plt
 
 
 
-LEARN_FREQ = 5  # update parameters every 5 steps
+LEARN_FREQ = 5  # update parameters every 10 steps
 MEMORY_SIZE = 100000  # replay memory size
 MEMORY_WARMUP_SIZE = 200  # store some experiences in the replay memory in advance
-BATCH_SIZE = 64
-LEARNING_RATE = 0.001
-GAMMA = 0.99  # discount factor of reward
+BATCH_SIZE = 128
+LEARNING_RATE = 0.01
+GAMMA = 0.9  # discount factor of reward
 
 
 
-def run_episode(agent, env, rpm,render=False):
+def run_episode(agent, env, rpm):
     total_reward = 0
     obs = env.reset()
     step = 0
+    max_step = 1000
     while True:
         step += 1
         action = agent.sample(obs)
@@ -49,29 +50,31 @@ def run_episode(agent, env, rpm,render=False):
 
         total_reward += reward
         obs = next_obs
-        if render:
-            env.render()
+        
         if isOver:
             # print("episode: {}, score: {}".format(step, total_reward))
             break            
-        # if step > 1000:
-        	# break
+        if step > max_step:
+        	break
     return total_reward
 
 
-def evaluate(agent, env, render=False):
+def evaluate(agent, env, episodes=5):
     # test part, run 5 episodes and average
     eval_reward = []
-    for i in range(5):
+    max_step = 1000
+    for i in range(episodes):
         obs = env.reset()
         episode_reward = 0
+        step = 0
         isOver = False
         while not isOver:
+            step += 1
             action = agent.predict(obs)
-            if render:
-                env.render()
             reward, obs, isOver = env.step(action)
             episode_reward += reward
+            if step > max_step:
+                break
         eval_reward.append(episode_reward)
     return np.mean(eval_reward)
 
@@ -79,13 +82,13 @@ def evaluate(agent, env, render=False):
 def main():
 
     env = Paddle()
-    action_dim = 2
+    action_dim = 3
     obs_shape = 5
 
     rpm = ReplayMemory(MEMORY_SIZE)
 
     model = PaddleModel(act_dim=action_dim)
-    algorithm = parl.algorithms.DQN(
+    algorithm = parl.algorithms.DDQN(
         model, act_dim=action_dim, gamma=GAMMA, lr=LEARNING_RATE)
     agent = PaddleAgent(
         algorithm,
@@ -102,7 +105,7 @@ def main():
     while len(rpm) < MEMORY_WARMUP_SIZE:  # warm up replay memory
         run_episode(agent, env, rpm)
 
-    max_episode = 1000  
+    max_episode = 500  
 
     # start train
     episode = 0
@@ -120,8 +123,8 @@ def main():
 #            plt.show()
             
 
-        eval_reward = evaluate(agent, env)
-        logger.info('episode:{}    test_reward:{}'.format(
+        eval_reward = evaluate(agent, env, episodes=5)
+        logger.info('episode:{}    test_mean_reward:{}'.format(
             episode, eval_reward))
     # 训练结束，保存模型
     save_path = 'paddle_model.ckpt'
